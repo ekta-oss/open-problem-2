@@ -2,7 +2,7 @@
 
 Everyday Workplace Communication · Module 1 · Segment 2: Making It Yours · **Stage 2.2** (COM-M1-OP-02), in the Swift AI Academy frame.
 
-The whole activity is one plain HTML page (`index.html`), with its picture inside the file. No framework or build step is needed. `Module1_Open_Problem_2_Stage2.2_The_Silent_Newcomer.html` is the same file, kept for downloading. It opens with a double-click.
+The whole activity is one plain HTML page (`index.html`), with its pictures and animation inside the file. No framework or build step is needed. `Module1_Open_Problem_2_Stage2.2_The_Silent_Newcomer.html` is the same file, kept for downloading. It opens with a double-click.
 The page is generated from `module1-segment1/` with `node scripts/plain-page.mjs scripts/op22-plain.template.html <out.html>`. Do not edit it by hand.
 
 ## Publish on GitHub + Vercel
