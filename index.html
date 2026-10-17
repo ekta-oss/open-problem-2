@@ -173,22 +173,42 @@ details.bank p { margin: 0 0 8px; font-size: 0.95rem; }
   var LEAVE = ["goodbye", "good bye", "bye", "see you", "take care", "good night", "goodnight"];
   var OPENER = ["i am", "my name", "myself", "call me", "im", "nice to meet you", "pleased to meet you", "glad to meet you", "first day", "first week", "first time", "new here", "am new", "new student",
     "from", "your name", "how are you", "are you", "do you", "is this seat", "can i", "may i", "which class", "which course", "study", "studying", "work here", "joined", "join*"];
+  // Self-introduction starters, and words that cannot come straight after them ("I am nice", "I am Hi", "My name is to …").
+  var INTRO = ["i am", "my name is", "my name", "myself", "call me", "im"];
+  var NOT_A_NAME = ["nice", "hi", "hii", "hello", "hey", "good", "to", "meet", "you", "your", "and", "the", "morning", "afternoon", "evening", "is", "am", "goodbye", "bye", "fine", "ok", "okay"];
+  /*
+   * The internal check (the "metric"). Every point must pass for "Well done!". Points are checked, and their
+   * feedback is given, in this order. Kinds:
+   *   keywords – any one listed word or phrase is present (a "?" also counts where question: true)
+   *   first    – the reply begins with the greeting (at most one word before it)
+   *   single   – only one greeting, not two stacked together ("Good morning Hi")
+   *   complete – every "I am" / "My name is" / "Myself" / "Call me" is followed by a real name or detail
+   *   fit      – a greeting is present and no words for leaving are used
+   * "first", "single" and "complete" only apply when their part is in the reply; otherwise they pass silently.
+   */
   var Q1 = { id: "opening", min: 3, max: 35,
     points: [
-      { id: "greeting", label: "Greets the person", terms: GREET, praise: "You started with a friendly greeting.", hint: "Try starting with a greeting, like 'Hi' or 'Good afternoon'." },
-      { id: "opener", label: "Gives a name, or opens a friendly conversation", terms: OPENER, question: true, praise: "You gave the person something to answer.", hint: "Add your name ('I am …'), or a friendly line such as 'Nice to meet you' or a question." },
-      { id: "fit", label: "Fits the situation (meeting, not leaving)", fit: true, praise: "Your words fit this moment.", hint: "Someone has just sat down in the middle of the day, so use words for meeting, like 'Hi' or 'Good afternoon'." }],
+      { id: "greeting", kind: "keywords", label: "Greets the person", terms: GREET, praiseNeeds: ["first", "single"], praise: "You started with a friendly greeting.", hint: "Try starting with a greeting, like 'Hi' or 'Good afternoon'." },
+      { id: "first", kind: "first", label: "The greeting comes first", hint: "Start with your greeting, then say who you are." },
+      { id: "single", kind: "single", label: "One greeting, not two", hint: "Use one greeting, not two together. Choose 'Hi' or 'Good afternoon'." },
+      { id: "complete", kind: "complete", label: "'I am' (or 'My name is') is followed by a name", hint: "After 'I am', add your name, for example 'I am Ravi.'" },
+      { id: "opener", kind: "keywords", label: "Gives a name, or opens a friendly conversation", terms: OPENER, question: true, praiseNeeds: ["complete"], praise: "You gave the person something to answer.", hint: "Add your name ('I am …'), or a friendly line such as 'Nice to meet you' or a question." },
+      { id: "fit", kind: "fit", label: "Fits the situation (meeting, not leaving)", praiseNeeds: ["all"], hintNeeds: ["greeting"], praise: "Your words fit this moment.", hint: "Someone has just sat down in the middle of the day, so use words for meeting, like 'Hi' or 'Good afternoon'." }],
     mixups: [
       { terms: ["good night", "goodnight"], text: "'Good night' is for leaving late at night. Here, the person has just sat down, so start with a greeting." },
       { terms: LEAVE, text: "That is a common mix-up! 'Goodbye' and 'See you' are for leaving. Here, the person has just sat down, so start with a greeting." }],
+    // Only the first matching note is shown, so the most useful comes first.
     notes: [
+      { terms: ["good morning hi i am nice to meet you"], text: "You added all the words from the word bank in a row. Choose only the words you need, and add your own name." },
+      { terms: ["nice morning"], text: "What would you like the person to understand? Try your opening once more." },
       { terms: ["good morning"], unless: ["good afternoon"], text: "'Good morning' is fine before 12 o'clock. In the middle of the day, 'Good afternoon' or 'Hi' fits well." },
       { re: "\\?", text: "Asking a question is a great idea: it gives the other person an easy way to answer." },
-      { terms: ["nice morning"], text: "What would you like the person to understand? Try your opening once more." }] };
+      { re: "^[^.,!?;:]*$", minWords: 5, text: "Tip: put a comma or a full stop between the parts, for example 'Hi, I am Ravi. Nice to meet you.'" }] };
   var Q2 = { id: "transfer", min: 4, max: 40,
     points: [
-      { id: "place", label: "A place where you could introduce yourself", terms: ["class*", "college", "institute", "school", "office", "work", "job", "library", "hostel", "bus", "train", "station", "platform", "market", "shop", "club", "team", "gym", "neighbour*", "neighbor*", "party", "meeting", "interview", "canteen", "home", "lift", "corridor", "event", "wedding", "park", "temple", "lab", "ground", "reception", "registration", "room", "desk", "stop", "queue", "lobby", "building", "group"], praise: "You named a place where you could use this.", hint: "Name one place, for example your class, the library or the bus stop." },
-      { id: "words", label: "What you would say there", terms: GREET.concat(["i am", "my name", "myself", "nice to meet you", "introduc*", "say", "tell"]), praise: "You said what you would say there.", hint: "Add what you would say there, for example 'Good morning! I am …'." }],
+      { id: "place", kind: "keywords", label: "A place where you could introduce yourself", terms: ["class*", "college", "institute", "school", "office", "work", "job", "library", "hostel", "bus", "train", "station", "platform", "market", "shop", "club", "team", "gym", "neighbour*", "neighbor*", "party", "meeting", "interview", "canteen", "home", "lift", "corridor", "event", "wedding", "park", "temple", "lab", "ground", "reception", "registration", "room", "desk", "stop", "queue", "lobby", "building", "group"], praise: "You named a place where you could use this.", hint: "Name one place, for example your class, the library or the bus stop." },
+      { id: "words", kind: "keywords", label: "What you would say there", terms: GREET.concat(["i am", "my name", "myself", "nice to meet you", "introduc*"]), praise: "You said what you would say there.", hint: "Add what you would say there, for example 'Good morning! I am …'." },
+      { id: "complete", kind: "complete", label: "'I am' (or 'My name is') is followed by a name", hint: "After 'I am', add your name, for example 'I am Ravi.'" }],
     model: "In my new class. I would say, \"Good morning! I am Ravi. This is my first day.\"" };
   var UI = { badge: "Practice · not graded",
     good: "Well done!", part: "Good start.", none: "Have another look.",
@@ -196,28 +216,60 @@ details.bank p { margin: 0 0 8px; font-size: 0.95rem; }
     tooShort: function (n) { return "Write at least " + n + " words."; },
     tooLong: function (n, have) { return "Please keep to " + n + " words or fewer. You have " + have + "."; } };
 
-  /* ---------- Key-word check ---------- */
+  /* ---------- The internal check ---------- */
   function norm(t) {
     return " " + String(t).toLowerCase().replace(/[‘’]/g, "'")
       .replace(/n't\b/g, " not").replace(/'m\b/g, " am").replace(/'re\b/g, " are").replace(/'ll\b/g, " will").replace(/'s\b/g, " is")
       .replace(/[^a-z0-9' ]+/g, " ").replace(/'/g, "").replace(/\s+/g, " ").trim() + " ";
   }
+  function phrase(w) { var stem = /\*$/.test(w); return { text: norm(stem ? w.slice(0, -1) : w).trim(), stem: stem }; }
   function has(text, terms) {
-    return terms.some(function (w) {
-      var stem = /\*$/.test(w), t = norm(stem ? w.slice(0, -1) : w).trim();
-      return text.indexOf(" " + t + (stem ? "" : " ")) >= 0;
+    return terms.some(function (w) { var p = phrase(w); return text.indexOf(" " + p.text + (p.stem ? "" : " ")) >= 0; });
+  }
+  // Every place a list of phrases appears, longest phrases first, never overlapping: [{ at, end }] in word positions.
+  function find(text, terms) {
+    var toks = text.trim().split(" "), used = [], hits = [];
+    terms.map(phrase).sort(function (a, b) { return b.text.split(" ").length - a.text.split(" ").length; }).forEach(function (p) {
+      var pw = p.text.split(" ");
+      for (var i = 0; i + pw.length <= toks.length; i++) {
+        var ok = pw.every(function (w, j) { return p.stem && j === pw.length - 1 ? toks[i + j].indexOf(w) === 0 : toks[i + j] === w; });
+        if (ok && !used.some(function (u) { return i < u.end && u.at < i + pw.length; })) { used.push({ at: i, end: i + pw.length }); hits.push({ at: i, end: i + pw.length, text: p.text }); }
+      }
     });
+    return { toks: toks, hits: hits.sort(function (a, b) { return a.at - b.at; }) };
   }
   function words(t) { var m = String(t).trim().match(/\S+/g); return m ? m.length : 0; }
-  function evaluate(q, raw) {
-    raw = String(raw); var t = norm(raw);
-    var met = q.points.filter(function (p) {
-      if (p.fit) return has(t, GREET) && !has(t, LEAVE);
-      return has(t, p.terms) || (p.question && raw.indexOf("?") >= 0);
-    }).map(function (p) { return p.id; });
-    var pick = function (list) { return (list || []).filter(function (x) { return (x.re ? new RegExp(x.re).test(raw) : has(t, x.terms)) && !(x.unless && has(t, x.unless)); }); };
-    return { met: met, mixups: pick(q.mixups).slice(0, 1).map(function (x) { return x.text; }), notes: pick(q.notes).map(function (x) { return x.text; }), all: met.length === q.points.length };
+  function check(p, t, raw) {
+    var g = find(t, GREET.filter(function (x) { return x !== "excuse me"; }));
+    switch (p.kind) {
+      case "fit": return has(t, GREET) && !has(t, LEAVE);
+      case "first": var all = find(t, GREET).hits; return !all.length || all[0].at <= 1 ? (all.length ? "pass" : "na") : false;
+      case "single": return g.hits.length <= 1 ? (g.hits.length ? "pass" : "na") : false;
+      case "complete":
+        var f = find(t, INTRO);
+        if (!f.hits.length) return "na";
+        return f.hits.every(function (h) { var next = f.toks[h.end]; return next && NOT_A_NAME.indexOf(next) < 0; }) ? "pass" : false;
+      default: return has(t, p.terms) || (p.question && raw.indexOf("?") >= 0);
+    }
   }
+  function evaluate(q, raw) {
+    raw = String(raw); var t = norm(raw), met = [], na = [];
+    q.points.forEach(function (p) { var r = check(p, t, raw); if (r) met.push(p.id); if (r === "na") na.push(p.id); });
+    var pick = function (list) { return (list || []).filter(function (x) { return (x.re ? new RegExp(x.re).test(raw) : has(t, x.terms)) && !(x.unless && has(t, x.unless)) && !(x.minWords && words(raw) < x.minWords); }); };
+    return { met: met, na: na, mixups: pick(q.mixups).slice(0, 1).map(function (x) { return x.text; }), notes: pick(q.notes).slice(0, 1).map(function (x) { return x.text; }), all: met.length === q.points.length };
+  }
+  // The learner sees one short message built from the check: a mix-up first, then praise, then what to fix.
+  // Order and completeness hints are left out when the part they check is missing (its own hint covers it).
+  function message(q, r) {
+    var out = [];
+    r.mixups.forEach(function (t) { out.push(t); });
+    var ok = function (id) { return id === "all" ? r.all : r.met.indexOf(id) >= 0; };
+    // Praise only when the part is there and correctly formed (praiseNeeds); a hint only when it adds something new (hintNeeds).
+    q.points.forEach(function (pt) { if (pt.praise && ok(pt.id) && (pt.praiseNeeds || []).every(ok)) out.push(pt.praise); });
+    q.points.forEach(function (pt) { if (!ok(pt.id) && (pt.hintNeeds || []).every(ok) && !(pt.kind === "fit" && r.mixups.length)) out.push(pt.hint); });
+    return out;
+  }
+  function verdict(r) { return r.all ? "good" : (r.met.filter(function (id) { return r.na.indexOf(id) < 0; }).length ? "part" : "none"); }
 
   /* ---------- Record (this browser only; never required to work) ---------- */
   var KEY = "m1s1.progress.v1", LOG = "2.2.open-problem-log";
@@ -266,17 +318,9 @@ details.bank p { margin: 0 0 8px; font-size: 0.95rem; }
     return h("div", { class: "qbox" }, [h("label", { for: "ans-" + opts.id, text: opts.label }), h("p", { class: "help", id: "help-" + opts.id, text: opts.help }), ta,
       h("div", { class: "count", id: "cnt-" + opts.id }, [counter, msg])]);
   }
-  // Feedback is written as a short message from the key-word check. The key words and the criteria stay internal.
-  function message(q, r) {
-    var out = [];
-    r.mixups.forEach(function (t) { out.push(t); });
-    q.points.forEach(function (pt) { if (r.met.indexOf(pt.id) >= 0) out.push(pt.praise); });
-    q.points.forEach(function (pt) { if (r.met.indexOf(pt.id) < 0 && !(pt.fit && r.mixups.length)) out.push(pt.hint); });
-    return out;
-  }
   function feedback(q, r, testid) {
-    var head = r.all ? UI.good : (r.met.length ? UI.part : UI.none);
-    var box = [h("div", { class: "fb " + (r.all ? "good" : "part"), testid: "feedback-" + testid, tabindex: "-1", role: "status" }, [
+    var v = verdict(r), head = UI[v];
+    var box = [h("div", { class: "fb " + (v === "good" ? "good" : "part"), testid: "feedback-" + testid, tabindex: "-1", role: "status" }, [
       h("div", { class: "head" }, [r.all ? svg(TICK) : null, h("span", { text: head })]),
       h("p", { class: "msg", testid: "message-" + testid, text: message(q, r).join(" ") })])];
     r.notes.forEach(function (t) { box.push(h("div", { class: "note", testid: "note-" + testid, text: t })); });
@@ -463,7 +507,7 @@ details.bank p { margin: 0 0 8px; font-size: 0.95rem; }
   document.addEventListener("visibilitychange", function () { if (document.hidden && rec && rec.state === "recording") stopRecording(false); });
 
   fresh(null); render();
-  window.__op22 = { evaluate: function (which, text) { return evaluate(which === 0 ? Q1 : Q2, text); } }; // test aid: the key-word check on its own
+  window.__op22 = { evaluate: function (which, text) { return evaluate(which === 0 ? Q1 : Q2, text); }, message: function (which, text) { var q = which === 0 ? Q1 : Q2; return message(q, evaluate(q, text)).join(" "); } }; // test aid: the key-word check on its own
 })();
 </script>
 </body>
