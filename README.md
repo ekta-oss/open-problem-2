@@ -18,8 +18,8 @@ GitHub Pages also works: Settings → Pages → deploy from the `main` branch, r
 The activity has three steps, taken from the client's `silent-newcomer-assets` package.
 
 1. **Your first words.** The canteen scene is shown with the script's question: "A new person sits next to you and says nothing. What do you say first?" The learner writes their own opening line (3 to 35 words). An optional word bank adds words where the cursor is: Good morning, Hi, I am, Nice to meet you.
-2. **Compare and reflect.** The learner's reply is shown with key-word feedback on three ideas: "You greeted the person", "You gave your name, or opened a friendly conversation" and "Your words fit this situation". Each idea found is ticked, and each missing one gets a hint. A farewell is named as a mix-up, and there are notes on "Good morning" at mid-day and on asking a question. Then comes the strong example ("Hi, I am Ravi. Nice to meet you."), labelled "for comparison, not a correction". Optional voice practice has a Practice badge and a consent tick box; it is recorded in the browser only and never checked. The learner can choose "Try another reply".
-3. **Take it with you.** "Where else could you introduce yourself today?" (4 to 40 words), with key-word feedback on a place and what you would say there.
+2. **Compare and reflect.** The learner sees their reply and a short feedback message. The message is built from an internal key-word check of three ideas: a greeting, a name or friendly opener, and words that fit the moment. It praises what is there and nudges for what is missing. A farewell is named as a mix-up, and there are notes on "Good morning" at mid-day and on asking a question. **The key words and the criteria are never shown to learners**; staff can find them in the separate key-word document. Then comes the strong example ("Hi, I am Ravi. Nice to meet you."), labelled "for comparison, not a correction". Optional voice practice has a Practice badge and a consent tick box; it is recorded in the browser only and never checked. The learner can choose "Try another reply".
+3. **Take it with you.** "Where else could you introduce yourself today?" (4 to 40 words), with the same kind of feedback message, checked for a place and what you would say there.
 
 At the end: "Practice complete", **Download my notes** (a text file) and **Delete my saved work**.
 
@@ -29,5 +29,5 @@ At the end: "Practice complete", **Download my notes** (a text file) and **Delet
 
 ## Content status (for review)
 
-- The scene, the three-step flow and the on-screen wording come from the client's asset package, written without contractions. The package's Pause button and 6-minute attempt limit are left out.
-- **The key words, hints, notes and the "where else" sample are draft wording** for review. The package records that SME approval of the strong example is pending.
+- The canteen scene is redrawn from the client's asset package, with the same palette and the newcomer seated at the table beside you. It is interim art. The three-step flow and the on-screen wording also come from the package, written without contractions. The package's Pause button and 6-minute attempt limit are left out.
+- **The key words, feedback lines, notes and the "where else" sample are draft wording** for review. They are listed in the internal document Module1_Open_Problem_2_Keywords.docx, which is kept out of this repository so learners cannot see the key words. The package records that SME approval of the strong example is pending.

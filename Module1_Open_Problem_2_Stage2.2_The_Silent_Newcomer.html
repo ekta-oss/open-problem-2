@@ -98,11 +98,7 @@ details.bank p { margin: 0 0 8px; font-size: 0.95rem; }
 .fb.good { background: var(--success-bg); border: 1px solid var(--success-border); color: #0f4f37; }
 .fb.part { background: var(--warn-bg); border: 1px solid var(--warn-border); color: var(--warn-text); }
 .fb .head { display: flex; gap: 8px; align-items: center; font-weight: 700; }
-.fb ul { list-style: none; margin: 8px 0 0; padding: 0; display: grid; gap: 6px; }
-.fb li { display: flex; gap: 8px; align-items: flex-start; }
-.fb li svg { flex: none; margin-top: 2px; }
-.fb li > span { display: block; }
-.fb .hint { display: block; margin: 2px 0 0; opacity: .92; }
+.fb .msg { margin: 6px 0 0; line-height: 1.5; }
 .note { margin-top: 10px; padding: 10px 14px; border-radius: 12px; background: var(--info-bg); border: 1px solid var(--info-border); color: var(--info-text); font-size: 1rem; }
 .mixup { margin-top: 10px; padding: 10px 14px; border-radius: 12px; background: var(--warn-bg); border: 1px solid var(--warn-border); color: var(--warn-text); font-size: 1rem; }
 .example { margin-top: 10px; padding: 12px 14px; border-radius: 12px; background: #fff; border: 1.5px solid var(--success-border); color: var(--heading); }
@@ -172,16 +168,16 @@ details.bank p { margin: 0 0 8px; font-size: 0.95rem; }
    * The key words, hints and the second sample are BUILD-WORDING for review.
    * "*" at the end of a word means any ending (introduc* = introduce, introducing).
    */
-  var IMG = { scene: "data:image/svg+xml;base64,PHN2ZyBpZD0iY2FudGVlbiIgeG1sbnM9Imh0dHA6Ly93d3cudzMub3JnLzIwMDAvc3ZnIiB2aWV3Qm94PSIwIDAgNjQwIDQwMCIgcm9sZT0iaW1nIiBhcmlhLWxhYmVsbGVkYnk9InNjZW5lVGl0bGUgc2NlbmVEZXNjIj48dGl0bGUgaWQ9InNjZW5lVGl0bGUiPkEgcXVpZXQgbW9tZW50IGF0IHRoZSBjYW50ZWVuIGJlbmNoPC90aXRsZT48ZGVzYyBpZD0ic2NlbmVEZXNjIj5Gcm9tIHlvdXIgc2lkZSBvZiBhIGNhbnRlZW4gdGFibGUsIGFuIGFkdWx0IG5ld2NvbWVyIGluIGEgbXVzdGFyZCBzaGlydCBzaXRzIG5leHQgdG8geW91LCBsb29raW5nIGRvd24gYXQgYSBwaG9uZS4gQW4gZW1wdHkgc3BlZWNoIGJ1YmJsZSB3YWl0cyBvbiB5b3VyIHNpZGUuPC9kZXNjPjxnIHN0cm9rZT0iIzUzNjY1YiIgc3Ryb2tlLXdpZHRoPSIzIiBzdHJva2UtbGluZWpvaW49InJvdW5kIj48cGF0aCBmaWxsPSIjZTVlOWQ3IiBzdHJva2U9Im5vbmUiIGQ9Ik0wIDBoNjQwdjQwMEgweiIvPjxwYXRoIGZpbGw9IiNmOGY0ZTciIHN0cm9rZT0ibm9uZSIgZD0iTTAgMGg2NDB2MjMySDB6Ii8+PHBhdGggZmlsbD0iI2JkY2JiNiIgZD0iTTQyIDMyaDE2OHYxNDdINDJ6Ii8+PHBhdGggZmlsbD0iI2U4ZWVlMiIgZD0iTTUyIDQyaDE0OHYxMjdINTJ6Ii8+PHBhdGggZmlsbD0ibm9uZSIgZD0iTTEyNiA0MnYxMjdNNTIgMTA0aDE0OCIvPjxwYXRoIGZpbGw9IiM5ZWFlODAiIHN0cm9rZT0ibm9uZSIgZD0iTTU4IDE0NHEzMC01MCA2NC0xMiA0NC02NSA3MiAwdjMxSDU4eiIvPjxwYXRoIGZpbGw9IiNkNWNiYjIiIGQ9Ik0yNDkgNTBoMTU4djYySDI0OXoiLz48cGF0aCBmaWxsPSJub25lIiBkPSJNMjY5IDY5aDExNG0tMTE0IDIzaDc1Ii8+PHBhdGggZmlsbD0iI2Q3ZDBiYiIgZD0iTTAgMjMyaDY0MHYxNjhIMHoiLz48cGF0aCBmaWxsPSIjYWY4YjY2IiBkPSJNMCAyODloNjQwdjM5SDB6Ii8+PHBhdGggZmlsbD0iIzhjNzA1OCIgZD0iTTQ2IDMyOGgxOXY3Mkg0NnptNTA1IDBoMjB2NzJoLTIweiIvPjxwYXRoIGZpbGw9IiM3YTgyNzUiIGQ9Ik0zNTkgMjg3bC0xNyAxMTNoNTNsMjAtOTEgNDAgOTFoNTNsLTMyLTExM3oiLz48cGF0aCBmaWxsPSIjZDhhYzU3IiBkPSJNMzUxIDE3NHE1Mi0yOSA5OC0zIDI5IDI2IDM0IDExOUgzMjh6Ii8+PHBhdGggZmlsbD0iI2I5ODU2NSIgZD0iTTM4NyAxMzloMzR2NDNxLTE4IDE3LTM0IDB6Ii8+PGVsbGlwc2UgY3g9IjQwMiIgY3k9IjExMCIgcng9IjQ0IiByeT0iNTEiIGZpbGw9IiNjNjkyNzEiLz48cGF0aCBmaWxsPSIjMzk0YTQxIiBkPSJNMzYwIDExMXEtMTctNjIgMzYtNjcgNjItMyA1NiA2N2wtMTctMjEtOS0yMnEtMjkgMzEtNjYgMjh6Ii8+PHBhdGggZmlsbD0ibm9uZSIgZD0iTTM4NCAxMTlsNiAxbTI4LTEgNi0xbS0yNyAxOHExMiA1IDIwLTEiLz48cGF0aCBmaWxsPSIjYzY5MjcxIiBkPSJNMzQ5IDIwNnEtMTQgNDMgMjAgNTRsNDctMTUtNy0yMC0zNiA4IDUtMjZtNzItMXEzMiAyOSAzIDQ3bC0zNi02IDEtMjEgMjIgMS0xNy0xNyIvPjxwYXRoIGZpbGw9IiMzNDQ5NDMiIGQ9Ik00MDEgMjEwbDMxLTQgNyA0My0zMSA0eiIvPjxwYXRoIGZpbGw9IiNmMmU5ZDciIHN0cm9rZT0ibm9uZSIgZD0iTTQwNyAyMTdsMTgtMiAzIDE5LTE4IDJ6Ii8+PHBhdGggZmlsbD0iI2JjOTQ2YiIgZD0iTS0yMCAzMzhsMjQyLTgxIDYzIDM1TDUxIDQwMEgweiIvPjxwYXRoIGZpbGw9IiNlNWM4YTUiIGQ9Ik03MSAzNzRxMzMtMzQgNzItMzNsMzYgMTEtMTUgMjEtMzEtNC0zMSAzMUg3MXoiLz48cGF0aCBmaWxsPSIjZmRmYmYxIiBkPSJNNzMgMTc5cS0xNyAwLTE3IDE4djUxcTAgMTggMTcgMThoMjlsMTggMjAtMS0yMGgxMTZxMTggMCAxOC0xOHYtNTFxMC0xOC0xOC0xOHoiLz48cGF0aCBmaWxsPSIjNzg5MDZjIiBkPSJNNTQ4IDIwNXYtNjFtMCAzMnEtMzktMTAtMjktMzQgMjktMiAyOSAzNG0wLTExcTgtMzkgMzMtMjUgMiAyNS0zMyAyNSIvPjxwYXRoIGZpbGw9IiNjYmE1ODMiIGQ9Ik01MjMgMTk5aDUxbC04IDM4aC0zNXoiLz48L2c+PC9zdmc+" };
+  var IMG = { scene: "data:image/svg+xml;base64,PHN2ZyB4bWxucz0iaHR0cDovL3d3dy53My5vcmcvMjAwMC9zdmciIHZpZXdCb3g9IjAgMCA4MDAgNDIwIiByb2xlPSJpbWciIGFyaWEtbGFiZWxsZWRieT0ic2NlbmVUaXRsZSBzY2VuZURlc2MiPgogIDx0aXRsZSBpZD0ic2NlbmVUaXRsZSI+QSBxdWlldCBtb21lbnQgYXQgdGhlIGNhbnRlZW4gdGFibGU8L3RpdGxlPgogIDxkZXNjIGlkPSJzY2VuZURlc2MiPlRoZSBjYW50ZWVuIGluIHRoZSBtaWRkbGUgb2YgdGhlIGRheSwgc2VlbiBmcm9tIHlvdXIgc2VhdC4gQSBuZXcgcGVyc29uIGluIGEgbXVzdGFyZCBzaGlydCBzaXRzIG5leHQgdG8geW91IGF0IHRoZSB0YWJsZSwgbG9va2luZyBkb3duIGF0IGEgcGhvbmUuIFlvdXIgZ2xhc3Mgb2YgdGVhIGlzIG9uIHRoZSB0YWJsZSwgYW5kIGFuIGVtcHR5IHNwZWVjaCBidWJibGUgd2FpdHMgb24geW91ciBzaWRlLjwvZGVzYz4KICA8IS0tIElOVEVSSU0gQVJUIChPcGVuIFByb2JsZW0gMiwgU3RhZ2UgMi4yKSwgcmVkcmF3biBmcm9tIHRoZSBjbGllbnQncyBjYW50ZWVuLXNjZW5lLnN2Zzogc2FtZSBwYWxldHRlIGFuZCBpZGVhLAogICAgICAgd2l0aCB0aGUgbmV3Y29tZXIgc2VhdGVkIGF0IHRoZSB0YWJsZSBiZXNpZGUgeW91LiBSZXBsYWNlIHdpdGggdGhlIGlsbHVzdHJhdG9yJ3MgYXJ0IHVuZGVyIHRoZSBzYW1lIG5hbWUuIC0tPgogIDxnIHN0cm9rZT0iIzRmNjE1NyIgc3Ryb2tlLXdpZHRoPSIzIiBzdHJva2UtbGluZWpvaW49InJvdW5kIiBzdHJva2UtbGluZWNhcD0icm91bmQiPgogICAgPCEtLSBSb29tIC0tPgogICAgPHJlY3QgeD0iMCIgeT0iMCIgd2lkdGg9IjgwMCIgaGVpZ2h0PSI0MjAiIGZpbGw9IiNmOGY0ZTciIHN0cm9rZT0ibm9uZSIvPgogICAgPHJlY3QgeD0iMCIgeT0iMjUwIiB3aWR0aD0iODAwIiBoZWlnaHQ9IjE3MCIgZmlsbD0iI2U4ZTFjZiIgc3Ryb2tlPSJub25lIi8+CiAgICA8cGF0aCBkPSJNMCAyNTBIODAwIiBmaWxsPSJub25lIi8+CiAgICA8IS0tIFdpbmRvdyB3aXRoIGEgbWlkZGF5IHN1biAtLT4KICAgIDxyZWN0IHg9IjYwIiB5PSIzMCIgd2lkdGg9IjIwMCIgaGVpZ2h0PSIxMjgiIGZpbGw9IiNkY2ViZTMiLz4KICAgIDxjaXJjbGUgY3g9IjIxNCIgY3k9IjYyIiByPSIxNSIgZmlsbD0iI2YyYzk0YyIgc3Ryb2tlPSJub25lIi8+CiAgICA8cGF0aCBkPSJNNjQgMTU0VjEyNFE5NiA5MiAxMjQgMTE4UTE2MCA3OCAxOTYgMTEyUTIyNiA5NiAyNTYgMTIyVjE1NFoiIGZpbGw9IiNhM2I0ODYiIHN0cm9rZT0ibm9uZSIvPgogICAgPHBhdGggZD0iTTE2MCAzMFYxNThNNjAgOTRIMjYwIiBmaWxsPSJub25lIi8+CiAgICA8IS0tIE1lbnUgYm9hcmQgLS0+CiAgICA8cmVjdCB4PSIzMjAiIHk9IjQ0IiB3aWR0aD0iMTc2IiBoZWlnaHQ9IjkyIiByeD0iNiIgZmlsbD0iIzM5NTI0YSIvPgogICAgPHRleHQgeD0iNDA4IiB5PSI3OCIgdGV4dC1hbmNob3I9Im1pZGRsZSIgZm9udC1mYW1pbHk9IkFyaWFsLCBIZWx2ZXRpY2EsIHNhbnMtc2VyaWYiIGZvbnQtc2l6ZT0iMTkiIGZvbnQtd2VpZ2h0PSI3MDAiIGZpbGw9IiNmNmYxZTIiIHN0cm9rZT0ibm9uZSI+Q0FOVEVFTjwvdGV4dD4KICAgIDx0ZXh0IHg9IjQwOCIgeT0iMTA2IiB0ZXh0LWFuY2hvcj0ibWlkZGxlIiBmb250LWZhbWlseT0iQXJpYWwsIEhlbHZldGljYSwgc2Fucy1zZXJpZiIgZm9udC1zaXplPSIxMyIgZmlsbD0iI2RmZThkZiIgc3Ryb2tlPSJub25lIj5UZWEgwrcgQ29mZmVlIMK3IFNuYWNrczwvdGV4dD4KICAgIDxwYXRoIGQ9Ik0zNTIgMTIwSDQ2NCIgZmlsbD0ibm9uZSIgc3Ryb2tlPSIjN2Y5NzhjIiBzdHJva2Utd2lkdGg9IjIiLz4KICAgIDwhLS0gU2VydmluZyBjb3VudGVyIHdpdGggYSB0ZWEgdXJuIC0tPgogICAgPHJlY3QgeD0iNjQwIiB5PSIxOTYiIHdpZHRoPSIxNzAiIGhlaWdodD0iNTYiIGZpbGw9IiNjOWI3OWEiLz4KICAgIDxyZWN0IHg9IjY5MCIgeT0iMTQwIiB3aWR0aD0iNDQiIGhlaWdodD0iNTgiIHJ4PSI5IiBmaWxsPSIjY2ZkNmQ5Ii8+CiAgICA8cGF0aCBkPSJNNzM0IDE2OGgxMnYxMCIgZmlsbD0ibm9uZSIvPgogICAgPCEtLSBUaGUgbmV3IHBlcnNvbiwgc2VhdGVkIGJlc2lkZSB5b3UsIGxvb2tpbmcgZG93biBhdCBhIHBob25lIC0tPgogICAgPHBhdGggZD0iTTQ3OCAzMTJMNDkwIDIyNFE0OTggMjAyIDUzMCAxOThINTkwUTYyMiAyMDIgNjMwIDIyNEw2NDIgMzEyWiIgZmlsbD0iI2Q5YTk0ZSIvPgogICAgPHBhdGggZD0iTTU0MiAxOThMNTYwIDIxNkw1NzggMTk4IiBmaWxsPSJub25lIi8+CiAgICA8cmVjdCB4PSI1NDgiIHk9IjE3NiIgd2lkdGg9IjI0IiBoZWlnaHQ9IjI2IiBmaWxsPSIjYjc3ZjVmIi8+CiAgICA8ZWxsaXBzZSBjeD0iNTE5IiBjeT0iMTQ2IiByeD0iNyIgcnk9IjEwIiBmaWxsPSIjYzY4ZTZjIi8+CiAgICA8ZWxsaXBzZSBjeD0iNjAxIiBjeT0iMTQ2IiByeD0iNyIgcnk9IjEwIiBmaWxsPSIjYzY4ZTZjIi8+CiAgICA8ZWxsaXBzZSBjeD0iNTYwIiBjeT0iMTQyIiByeD0iNDAiIHJ5PSI0NCIgZmlsbD0iI2M2OGU2YyIvPgogICAgPHBhdGggZD0iTTUyMCAxNDBRNTE3IDk2IDU2MCA5NVE2MDQgOTYgNjAxIDEzOFE1OTAgMTE2IDU2MCAxMTVRNTM0IDExNiA1MjAgMTQwWiIgZmlsbD0iIzJmM2QzNiIvPgogICAgPHBhdGggZD0iTTU0MCAxNTBxNiA0IDEyIDBNNTY4IDE1MHE2IDQgMTIgME01NTMgMTY4cTcgNCAxNCAwIiBmaWxsPSJub25lIi8+CiAgICA8IS0tIEFybXM6IGFuIG91dGxpbmUgc3Ryb2tlIHVuZGVyIGEgY29sb3VyIHN0cm9rZSAtLT4KICAgIDxwYXRoIGQ9Ik00OTggMjI4TDQ5NiAyODJRNTA4IDMwMiA1NDYgMjg4TTYyMiAyMjhMNjI2IDI4MlE2MTIgMzAyIDU3NCAyODgiIGZpbGw9Im5vbmUiIHN0cm9rZS13aWR0aD0iMjYiLz4KICAgIDxwYXRoIGQ9Ik00OTggMjI4TDQ5NiAyODAiIGZpbGw9Im5vbmUiIHN0cm9rZT0iI2Q5YTk0ZSIgc3Ryb2tlLXdpZHRoPSIyMCIvPgogICAgPHBhdGggZD0iTTYyMiAyMjhMNjI2IDI4MCIgZmlsbD0ibm9uZSIgc3Ryb2tlPSIjZDlhOTRlIiBzdHJva2Utd2lkdGg9IjIwIi8+CiAgICA8cGF0aCBkPSJNNDk2IDI4NFE1MDggMzAyIDU0NiAyODhNNjI2IDI4NFE2MTIgMzAyIDU3NCAyODgiIGZpbGw9Im5vbmUiIHN0cm9rZT0iI2M2OGU2YyIgc3Ryb2tlLXdpZHRoPSIyMCIvPgogICAgPGcgdHJhbnNmb3JtPSJyb3RhdGUoLTggNTYwIDI3MikiPgogICAgICA8cmVjdCB4PSI1MzkiIHk9IjI1NCIgd2lkdGg9IjQyIiBoZWlnaHQ9IjMyIiByeD0iNSIgZmlsbD0iIzJmM2QzNiIvPgogICAgICA8cmVjdCB4PSI1NDUiIHk9IjI1OSIgd2lkdGg9IjMwIiBoZWlnaHQ9IjIxIiByeD0iMiIgZmlsbD0iI2U5ZjJmNyIgc3Ryb2tlPSJub25lIi8+CiAgICA8L2c+CiAgICA8Y2lyY2xlIGN4PSI1NDYiIGN5PSIyODciIHI9IjkiIGZpbGw9IiNjNjhlNmMiLz4KICAgIDxjaXJjbGUgY3g9IjU3NCIgY3k9IjI4NyIgcj0iOSIgZmlsbD0iI2M2OGU2YyIvPgogICAgPCEtLSBUaGUgdGFibGUgaW4gZnJvbnQgb2YgeW91IGJvdGggLS0+CiAgICA8cmVjdCB4PSItNCIgeT0iMzAwIiB3aWR0aD0iODA4IiBoZWlnaHQ9IjI0IiBmaWxsPSIjYjU4YjYyIi8+CiAgICA8cmVjdCB4PSItNCIgeT0iMzI0IiB3aWR0aD0iODA4IiBoZWlnaHQ9IjE0IiBmaWxsPSIjOWM3MzUwIi8+CiAgICA8cmVjdCB4PSI3MCIgeT0iMzM4IiB3aWR0aD0iMTgiIGhlaWdodD0iODYiIGZpbGw9IiM4YTY0NDYiLz4KICAgIDxyZWN0IHg9IjcxMiIgeT0iMzM4IiB3aWR0aD0iMTgiIGhlaWdodD0iODYiIGZpbGw9IiM4YTY0NDYiLz4KICAgIDwhLS0gWW91ciBnbGFzcyBvZiB0ZWEgLS0+CiAgICA8cGF0aCBkPSJNMzAwIDI2MmgzMmwtNCA0MGgtMjR6IiBmaWxsPSIjZTdlY2VmIi8+CiAgICA8cGF0aCBkPSJNMzAyIDI3NmgyOGwtMyAyNmgtMjJ6IiBmaWxsPSIjYzg4NzRmIiBzdHJva2U9Im5vbmUiLz4KICAgIDwhLS0gWW91ciBlbXB0eSBzcGVlY2ggYnViYmxlIC0tPgogICAgPHBhdGggZD0iTTE0MiAxNzJIMzU0QTIyIDIyIDAgMCAxIDM3NiAxOTRWMjMyQTIyIDIyIDAgMCAxIDM1NCAyNTRIMjE2TDE4NCAyODBMMTkwIDI1NEgxNDJBMjIgMjIgMCAwIDEgMTIwIDIzMlYxOTRBMjIgMjIgMCAwIDEgMTQyIDE3MloiIGZpbGw9IiNmZmZkZjciLz4KICA8L2c+Cjwvc3ZnPgo=" };
   var GREET = ["hi", "hii", "hello", "hey", "good morning", "good afternoon", "good evening", "namaste", "namaskar", "excuse me"];
   var LEAVE = ["goodbye", "good bye", "bye", "see you", "take care", "good night", "goodnight"];
   var OPENER = ["i am", "my name", "myself", "call me", "im", "nice to meet you", "pleased to meet you", "glad to meet you", "first day", "first week", "first time", "new here", "am new", "new student",
     "from", "your name", "how are you", "are you", "do you", "is this seat", "can i", "may i", "which class", "which course", "study", "studying", "work here", "joined", "join*"];
   var Q1 = { id: "opening", min: 3, max: 35,
     points: [
-      { id: "greeting", label: "You greeted the person.", terms: GREET, hint: "Start with a greeting, like 'Hi' or 'Good afternoon'." },
-      { id: "opener", label: "You gave your name, or opened a friendly conversation.", terms: OPENER, question: true, hint: "Add your name ('I am …'), or a friendly line such as 'Nice to meet you' or a question." },
-      { id: "fit", label: "Your words fit this situation.", fit: true, hint: "Someone has just sat down in the middle of the day: use words for meeting, like 'Hi' or 'Good afternoon'." }],
+      { id: "greeting", label: "Greets the person", terms: GREET, praise: "You started with a friendly greeting.", hint: "Try starting with a greeting, like 'Hi' or 'Good afternoon'." },
+      { id: "opener", label: "Gives a name, or opens a friendly conversation", terms: OPENER, question: true, praise: "You gave the person something to answer.", hint: "Add your name ('I am …'), or a friendly line such as 'Nice to meet you' or a question." },
+      { id: "fit", label: "Fits the situation (meeting, not leaving)", fit: true, praise: "Your words fit this moment.", hint: "Someone has just sat down in the middle of the day, so use words for meeting, like 'Hi' or 'Good afternoon'." }],
     mixups: [
       { terms: ["good night", "goodnight"], text: "'Good night' is for leaving late at night. Here, the person has just sat down, so start with a greeting." },
       { terms: LEAVE, text: "That is a common mix-up! 'Goodbye' and 'See you' are for leaving. Here, the person has just sat down, so start with a greeting." }],
@@ -191,12 +187,12 @@ details.bank p { margin: 0 0 8px; font-size: 0.95rem; }
       { terms: ["nice morning"], text: "What would you like the person to understand? Try your opening once more." }] };
   var Q2 = { id: "transfer", min: 4, max: 40,
     points: [
-      { id: "place", label: "A place where you could introduce yourself", terms: ["class*", "college", "institute", "school", "office", "work", "job", "library", "hostel", "bus", "train", "station", "platform", "market", "shop", "club", "team", "gym", "neighbour*", "neighbor*", "party", "meeting", "interview", "canteen", "home", "lift", "corridor", "event", "wedding", "park", "temple", "lab", "ground", "reception", "registration", "room", "desk", "stop", "queue", "lobby", "building", "group"], hint: "Name one place, for example your class, the library or the bus stop." },
-      { id: "words", label: "What you would say there", terms: GREET.concat(["i am", "my name", "myself", "nice to meet you", "introduc*", "say", "tell"]), hint: "Add what you would say, for example 'Good morning! I am …'." }],
+      { id: "place", label: "A place where you could introduce yourself", terms: ["class*", "college", "institute", "school", "office", "work", "job", "library", "hostel", "bus", "train", "station", "platform", "market", "shop", "club", "team", "gym", "neighbour*", "neighbor*", "party", "meeting", "interview", "canteen", "home", "lift", "corridor", "event", "wedding", "park", "temple", "lab", "ground", "reception", "registration", "room", "desk", "stop", "queue", "lobby", "building", "group"], praise: "You named a place where you could use this.", hint: "Name one place, for example your class, the library or the bus stop." },
+      { id: "words", label: "What you would say there", terms: GREET.concat(["i am", "my name", "myself", "nice to meet you", "introduc*", "say", "tell"]), praise: "You said what you would say there.", hint: "Add what you would say there, for example 'Good morning! I am …'." }],
     model: "In my new class. I would say, \"Good morning! I am Ravi. This is my first day.\"" };
   var UI = { badge: "Practice · not graded",
-    good: "Well done! Your reply has the key ideas.", part: "Good start. Here is what to add:", none: "Have another look. These ideas will help:",
-    keyNote: "This check looks for key words. It is not a grade, and there is no score.",
+    good: "Well done!", part: "Good start.", none: "Have another look.",
+    keyNote: "This feedback is for practice. There is no score.",
     tooShort: function (n) { return "Write at least " + n + " words."; },
     tooLong: function (n, have) { return "Please keep to " + n + " words or fewer. You have " + have + "."; } };
 
@@ -257,7 +253,6 @@ details.bank p { margin: 0 0 8px; font-size: 0.95rem; }
   }
   function svg(inner, size) { var s = document.createElementNS("http://www.w3.org/2000/svg", "svg"); s.setAttribute("viewBox", "0 0 22 22"); s.setAttribute("width", size || 20); s.setAttribute("height", size || 20); s.setAttribute("aria-hidden", "true"); s.innerHTML = inner; return s; }
   var TICK = '<circle cx="11" cy="11" r="11" fill="#1c7f59"/><path d="M6.5 11.5l3 3 6-6.5" fill="none" stroke="#fff" stroke-width="2.2" stroke-linecap="round" stroke-linejoin="round"/>';
-  var OPEN = '<circle cx="11" cy="11" r="9.5" fill="#fff" stroke="#c68a1d" stroke-width="2" stroke-dasharray="3 2.4"/>';
   function arrow() { var s = document.createElementNS("http://www.w3.org/2000/svg", "svg"); s.setAttribute("viewBox", "0 0 16 16"); s.setAttribute("width", "16"); s.setAttribute("height", "16"); s.setAttribute("aria-hidden", "true"); s.innerHTML = '<path d="M3 8h10M9 4l4 4-4 4" fill="none" stroke="currentColor" stroke-width="1.8" stroke-linecap="round" stroke-linejoin="round"/>'; return s; }
 
   function answerBox(opts) {
@@ -271,14 +266,19 @@ details.bank p { margin: 0 0 8px; font-size: 0.95rem; }
     return h("div", { class: "qbox" }, [h("label", { for: "ans-" + opts.id, text: opts.label }), h("p", { class: "help", id: "help-" + opts.id, text: opts.help }), ta,
       h("div", { class: "count", id: "cnt-" + opts.id }, [counter, msg])]);
   }
+  // Feedback is written as a short message from the key-word check. The key words and the criteria stay internal.
+  function message(q, r) {
+    var out = [];
+    r.mixups.forEach(function (t) { out.push(t); });
+    q.points.forEach(function (pt) { if (r.met.indexOf(pt.id) >= 0) out.push(pt.praise); });
+    q.points.forEach(function (pt) { if (r.met.indexOf(pt.id) < 0 && !(pt.fit && r.mixups.length)) out.push(pt.hint); });
+    return out;
+  }
   function feedback(q, r, testid) {
+    var head = r.all ? UI.good : (r.met.length ? UI.part : UI.none);
     var box = [h("div", { class: "fb " + (r.all ? "good" : "part"), testid: "feedback-" + testid, tabindex: "-1", role: "status" }, [
-      h("div", { class: "head" }, [r.all ? svg(TICK) : null, h("span", { text: r.all ? UI.good : (r.met.length ? UI.part : UI.none) })]),
-      h("ul", {}, q.points.map(function (pt) {
-        var ok = r.met.indexOf(pt.id) >= 0;
-        return h("li", { "data-met": ok ? "yes" : "no", testid: "key-" + testid + "-" + pt.id }, [svg(ok ? TICK : OPEN), h("span", {}, [h("span", { class: "sr", text: ok ? "Included: " : "Not yet: " }), pt.label, ok ? null : h("span", { class: "hint", text: pt.hint })])]);
-      }))])];
-    r.mixups.forEach(function (t) { box.push(h("div", { class: "mixup", testid: "mixup-" + testid, text: t })); });
+      h("div", { class: "head" }, [r.all ? svg(TICK) : null, h("span", { text: head })]),
+      h("p", { class: "msg", testid: "message-" + testid, text: message(q, r).join(" ") })])];
     r.notes.forEach(function (t) { box.push(h("div", { class: "note", testid: "note-" + testid, text: t })); });
     return box;
   }
@@ -346,7 +346,7 @@ details.bank p { margin: 0 0 8px; font-size: 0.95rem; }
   function sceneCol(later) {
     return h("div", { class: "scene-col" + (later ? " later" : "") }, [
       h("p", { class: "hero" }, ["A small hello.", h("br"), "A new connection."]),
-      h("figure", { class: "scene", style: "margin:0" }, [h("img", { src: IMG.scene, alt: "From your side of a canteen table, an adult newcomer in a mustard shirt sits next to you, looking down at a phone. An empty speech bubble waits on your side.", testid: "scene" })]),
+      h("figure", { class: "scene", style: "margin:0" }, [h("img", { src: IMG.scene, alt: "The canteen in the middle of the day, seen from your seat. A new person in a mustard shirt sits next to you at the table, looking down at a phone. Your glass of tea is on the table, and an empty speech bubble waits on your side.", testid: "scene" })]),
       h("p", { class: "caption", text: "The canteen · Middle of the day" }),
       h("div", { class: "context" }, [h("p", { text: "Someone new sits beside you. They look at their phone and say nothing." }), h("p", { text: "You can choose how to begin. There is more than one good answer." })])]);
   }
@@ -374,7 +374,7 @@ details.bank p { margin: 0 0 8px; font-size: 0.95rem; }
     var right = h("div", {}, [stepLine(2, "Compare and reflect"),
       h("h1", { id: "head", tabindex: "-1", text: "You started the conversation." }),
       h("p", { class: "label", text: "This is your reply:" }), h("p", { class: "yours", testid: "your-reply", text: st.reply }),
-      h("p", { class: "label", text: "What your reply includes:" })].concat(feedback(Q1, r, "opening")).concat([
+      h("p", { class: "label", text: "Feedback on your reply:" })].concat(feedback(Q1, r, "opening")).concat([
       h("p", { class: "small", text: UI.keyNote }),
       h("p", { class: "label", text: "Here is one strong example:" }),
       h("div", { class: "example", testid: "example" }, [h("q", { text: "Hi, I am Ravi. Nice to meet you." }),
@@ -412,7 +412,7 @@ details.bank p { margin: 0 0 8px; font-size: 0.95rem; }
   function notes() {
     var lines = ["The Silent Newcomer · Swift AI Academy · Module 1, Stage 2.2", "Practice, not graded.", "",
       "The task: A new person sits next to you and says nothing. What do you say first?", "My opening line: " + st.reply, "",
-      "What my reply included:"].concat(Q1.points.map(function (p) { return (st.r1 && st.r1.met.indexOf(p.id) >= 0 ? "[x] " : "[ ] ") + p.label; })).concat(["",
+      "Feedback: " + (st.r1 ? message(Q1, st.r1).join(" ") : "")].concat(["",
       "One strong example: Hi, I am Ravi. Nice to meet you.", "",
       "Where else I could introduce myself: " + st.transfer, "",
       st.attempt.recorded ? "I also recorded my reply. The recording stays in this browser and is not in these notes." : ""]);
